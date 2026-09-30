@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Types of Networks</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<!-- Note: the source content has no information on cost, so the comparison table uses Range, Ownership and Media to stay within the supplied text. -->
+<style>
+  :root{--pan:#10b981;--lan:#6366f1}
+  html,body{height:100%;margin:0;background:#09090b;font-family:'Inter',sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none}
+  .slide{position:absolute;inset:0;padding:3rem 4rem 7.5rem;display:none;align-items:center}
+  .slide.active{display:flex;animation:fade .4s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .card{background:#18181b;border:1px solid #27272a;border-radius:1rem}
+  .bul li{display:flex;gap:.9rem;font-size:1.35rem;line-height:1.5;color:#a1a1aa;margin-bottom:1rem}
+  .bul li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;margin-top:.8rem;background:var(--c,#fff)}
+  .bul b{color:#fff;font-weight:600}
+
+  /* Moving dot-matrix background (hero + thank-you) */
+  .dots-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;
+    -webkit-mask-image:radial-gradient(ellipse at center,#000 25%,transparent 75%);
+            mask-image:radial-gradient(ellipse at center,#000 25%,transparent 75%)}
+  .dots-bg::before,.dots-bg::after{content:"";position:absolute;inset:-64px}
+  .dots-bg::before{background-image:radial-gradient(circle,#52525b 1.6px,transparent 1.8px);background-size:32px 32px;animation:dotsA 8s linear infinite}
+  .dots-bg::after{background-image:radial-gradient(circle,#10b981 2.4px,transparent 2.6px);background-size:96px 96px;background-position:48px 48px;opacity:.7;animation:dotsB 12s linear infinite}
+  @keyframes dotsA{to{transform:translate(32px,32px)}}
+  @keyframes dotsB{to{transform:translate(-96px,48px)}}
+  .dots-bg.soft{opacity:.5}
+
+  /* Flowing data packets */
+  .pk{fill:none;stroke-width:9;stroke-linecap:round;stroke-dasharray:1 46;animation:flow 1.6s linear infinite;filter:drop-shadow(0 0 5px currentColor)}
+  .pk.fast{animation-duration:.7s}
+  .pk.rev{animation-direction:reverse}
+  @keyframes flow{to{stroke-dashoffset:-47}}
+  .wire{fill:none;stroke:#3f3f46;stroke-width:2}
+  .pulse{animation:pulse 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  @keyframes pulse{50%{transform:scale(1.08)}}
+
+  /* Radar */
+  .radar{position:relative;height:min(68vh,68vw);aspect-ratio:1;border-radius:50%;background:#050507}
+  .ring{position:absolute;border-radius:50%;border:1px solid #3f3f46;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg,transparent 270deg,rgba(16,185,129,.55) 360deg);animation:spin 4s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .rl{position:absolute;left:50%;transform:translateX(-50%);font-size:.95rem;font-weight:700;background:#09090b;padding:0 .5rem;border-radius:4px;white-space:nowrap}
+
+  /* Striped speed bars */
+  .stripe{height:3.2rem;border-radius:.6rem;animation:slide 1s linear infinite}
+  .s-pan{background:repeating-linear-gradient(45deg,#10b981 0 14px,#059669 14px 28px);background-size:39.6px 39.6px}
+  .s-lan{background:repeating-linear-gradient(45deg,#6366f1 0 14px,#4f46e5 14px 28px);background-size:39.6px 39.6px}
+  @keyframes slide{to{background-position:39.6px 0}}
+
+  /* Quiz */
+  .opt{display:flex;gap:1rem;align-items:center;width:100%;text-align:left;padding:1rem 1.25rem;border-radius:.8rem;background:#18181b;border:2px solid #27272a;color:#e4e4e7;font-size:1.25rem}
+  .opt span{flex:none;width:2.2rem;height:2.2rem;border-radius:.5rem;background:#27272a;display:grid;place-items:center;font-weight:700}
+  .opt.sel{border-color:#fff}
+  .opt.ok{background:#16a34a;border-color:#22c55e;color:#fff}
+  .opt.bad{background:#dc2626;border-color:#ef4444;color:#fff}
+  .nav{height:4.5rem;min-width:11rem;border-radius:1rem;font-size:1.3rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:.6rem;border:1px solid #27272a;background:#18181b;color:#fff}
+  .nav:active{transform:scale(.96)}
+  .nav:disabled{opacity:.3}
+</style>
+</head>
+<body>
+
+<!-- 1 HERO -->
+<section class="slide active" style="justify-content:center;text-align:center">
+  <div class="dots-bg"></div>
+  <div style="position:relative;z-index:1">
+    <div class="flex justify-center gap-3 mb-8">
+      <i data-lucide="network" class="w-14 h-14" style="color:var(--lan)"></i>
+      <i data-lucide="bluetooth" class="w-14 h-14" style="color:var(--pan)"></i>
+    </div>
+    <h1 class="text-white font-black tracking-tight" style="font-size:7rem;line-height:1">Types of Networks</h1>
+    <p class="text-zinc-400 mt-6 text-2xl">
+      <span style="color:var(--pan)">PAN</span> &nbsp;•&nbsp; <span style="color:var(--lan)">LAN</span>
+    </p>
+    <p class="text-zinc-400 mt-10 text-2xl font-medium">Presented by Mohammad Deeshan Pinjar</p>
+  </div>
+</section>
+
+<!-- 2 LOGICAL TYPES -->
+<section class="slide">
+  <div class="grid grid-cols-2 gap-12 w-full items-center">
+    <div>
+      <h2 class="text-white text-5xl font-bold mb-3">Logical Types</h2>
+      <p class="text-zinc-400 text-xl mb-8">Networks vary in size, complexity, and geographical spread.</p>
+      <ul class="bul" style="--c:#fff">
+        <li><div><b>Client-Server:</b> a central powerful server, with multiple clients seeking resources. Used for large networks.</div></li>
+      </ul>
+      <ul class="bul" style="--c:#a1a1aa">
+        <li><div><b>Peer-to-Peer:</b> all nodes are equal, each both client and server. No dedicated servers. Ideal for small networks.</div></li>
+      </ul>
+    </div>
+    <div class="card p-4">
+      <svg viewBox="0 0 440 400" class="w-full">
+        <text x="220" y="22" text-anchor="middle" fill="#a1a1aa" font-size="15" font-weight="600">CLIENT-SERVER</text>
+        <g class="wire"><path d="M220 100L100 55M220 100L340 55M220 100L100 150M220 100L340 150"/></g>
+        <g stroke="#fff" color="#fff">
+          <path class="pk" d="M100 55L220 100"/><path class="pk rev" d="M340 55L220 100"/>
+          <path class="pk" d="M100 150L220 100"/><path class="pk rev" d="M340 150L220 100"/>
+        </g>
+        <rect x="190" y="75" width="60" height="50" rx="8" fill="#fff"/><text x="220" y="106" text-anchor="middle" font-size="13" font-weight="700" fill="#09090b">SERVER</text>
+        <g fill="#27272a" stroke="#71717a"><rect x="75" y="40" width="50" height="30" rx="6"/><rect x="315" y="40" width="50" height="30" rx="6"/><rect x="75" y="135" width="50" height="30" rx="6"/><rect x="315" y="135" width="50" height="30" rx="6"/></g>
+        <g fill="#a1a1aa" font-size="11" text-anchor="middle"><text x="100" y="60">Client</text><text x="340" y="60">Client</text><text x="100" y="155">Client</text><text x="340" y="155">Client</text></g>
+
+        <line x1="30" y1="205" x2="410" y2="205" stroke="#27272a"/>
+        <text x="220" y="240" text-anchor="middle" fill="#a1a1aa" font-size="15" font-weight="600">PEER-TO-PEER</text>
+        <g class="wire"><path d="M110 290L330 290M110 290L330 370M330 290L110 370M110 370L330 370M110 290L110 370M330 290L330 370"/></g>
+        <g stroke="#a1a1aa" color="#a1a1aa">
+          <path class="pk" d="M110 290L330 290"/><path class="pk rev" d="M110 370L330 370"/>
+          <path class="pk" d="M110 290L330 370"/><path class="pk rev" d="M330 290L110 370"/>
+          <path class="pk" d="M110 290L110 370"/><path class="pk rev" d="M330 290L330 370"/>
+        </g>
+        <g fill="#27272a" stroke="#d4d4d8" stroke-width="2"><circle cx="110" cy="290" r="22"/><circle cx="330" cy="290" r="22"/><circle cx="110" cy="370" r="22"/><circle cx="330" cy="370" r="22"/></g>
+        <g fill="#fff" font-size="11" text-anchor="middle"><text x="110" y="294">Peer</text><text x="330" y="294">Peer</text><text x="110" y="374">Peer</text><text x="330" y="374">Peer</text></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 3 RADAR -->
+<section class="slide" style="justify-content:center">
+  <div class="flex items-center gap-16 w-full justify-center">
+    <div class="max-w-md">
+      <h2 class="text-white text-5xl font-bold mb-6">Geographical Classification</h2>
+      <ul class="bul" style="--c:#fff">
+        <li><div><b style="color:var(--pan)">PAN</b> Personal Area Network</div></li>
+        <li><div><b style="color:var(--lan)">LAN</b> Local Area Network</div></li>
+        <li><div><b>MAN</b> Metropolitan Area Network</div></li>
+        <li><div><b>WAN</b> Wide Area Network</div></li>
+      </ul>
+    </div>
+    <div class="radar">
+      <div class="ring" style="width:100%;height:100%"></div>
+      <div class="ring" style="width:72%;height:72%"></div>
+      <div class="ring" style="width:46%;height:46%;border-color:var(--lan)"></div>
+      <div class="ring" style="width:22%;height:22%;border-color:var(--pan)"></div>
+      <div class="sweep"></div>
+      <div class="rl" style="top:-.7rem;color:#fff">WAN • Global</div>
+      <div class="rl" style="top:13%;color:#a1a1aa">MAN • 50 km</div>
+      <div class="rl" style="top:27%;color:#818cf8">LAN • 1 km</div>
+      <div class="rl" style="top:39%;color:var(--pan)">PAN • 10 m</div>
+      <div style="position:absolute;top:50%;left:50%;width:10px;height:10px;margin:-5px;border-radius:50%;background:var(--pan);box-shadow:0 0 12px var(--pan)"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 PAN -->
+<section class="slide">
+  <div class="grid grid-cols-2 gap-12 w-full items-center">
+    <div>
+      <div class="inline-block px-4 py-1 rounded-full text-lg font-semibold mb-4" style="background:#064e3b;color:var(--pan)">PAN</div>
+      <h2 class="text-white text-5xl font-bold mb-8">Personal Area Network</h2>
+      <ul class="bul" style="--c:var(--pan)">
+        <li><div>Belongs to a <b>single person</b></div></li>
+        <li><div>Proximity up to <b>10 metres</b></div></li>
+        <li><div><b>Wired:</b> USB. <b>Wireless:</b> Bluetooth, Infrared</div></li>
+        <li><div>Connects PCs, laptops, mobiles to transfer files</div></li>
+        <li><div><b>Examples:</b> wireless keyboard/mouse, Bluetooth headphones, wireless printers, TV remotes</div></li>
+      </ul>
+    </div>
+    <div class="card p-4">
+      <svg viewBox="0 0 440 380" class="w-full">
+        <circle cx="130" cy="190" r="110" fill="none" stroke="#10b981" stroke-opacity=".25" stroke-dasharray="4 8"/>
+        <g class="wire"><path d="M170 190C250 190 260 90 330 90M170 190C250 190 260 290 330 290"/></g>
+        <g stroke="#10b981" color="#10b981">
+          <path class="pk" d="M170 190C250 190 260 90 330 90"/><path class="pk" d="M170 190C250 190 260 290 330 290"/>
+        </g>
+        <g class="pulse"><rect x="85" y="125" width="80" height="130" rx="14" fill="#09090b" stroke="#10b981" stroke-width="3"/><rect x="95" y="140" width="60" height="95" rx="4" fill="#064e3b"/><circle cx="125" cy="246" r="3" fill="#10b981"/></g>
+        <text x="125" y="280" text-anchor="middle" fill="#a1a1aa" font-size="14">Smartphone</text>
+        <rect x="310" y="60" width="60" height="60" rx="18" fill="#09090b" stroke="#10b981" stroke-width="3"/><circle cx="340" cy="90" r="14" fill="#10b981" opacity=".5"/>
+        <text x="340" y="145" text-anchor="middle" fill="#a1a1aa" font-size="14">Smartwatch</text>
+        <circle cx="325" cy="290" r="16" fill="#09090b" stroke="#10b981" stroke-width="3"/><circle cx="360" cy="290" r="16" fill="#09090b" stroke="#10b981" stroke-width="3"/>
+        <text x="342" y="333" text-anchor="middle" fill="#a1a1aa" font-size="14">Earbuds</text>
+        <text x="250" y="225" fill="#10b981" font-size="13" font-weight="600">Bluetooth</text>
+        <text x="130" y="60" text-anchor="middle" fill="#10b981" font-size="14" font-weight="600">≤ 10 m</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 5 LAN -->
+<section class="slide">
+  <div class="grid grid-cols-2 gap-12 w-full items-center">
+    <div>
+      <div class="inline-block px-4 py-1 rounded-full text-lg font-semibold mb-4" style="background:#1e1b4b;color:#818cf8">LAN</div>
+      <h2 class="text-white text-5xl font-bold mb-8">Local Area Network</h2>
+      <ul class="bul" style="--c:var(--lan)">
+        <li><div><b>Privately owned</b></div></li>
+        <li><div>Small geographical area: single room, floor, school, up to <b>1 km</b></div></li>
+        <li><div><b>Wired:</b> Ethernet cables, UTP, coaxial, fibre optics. <b>Wireless:</b> WLAN</div></li>
+        <li><div>Key purpose: <b>share resources</b> (data, programs, printer)</div></li>
+        <li><div>Speed: <b>10 Mbps to 1 Gbps</b></div></li>
+      </ul>
+    </div>
+    <div class="card p-4">
+      <svg viewBox="0 0 440 380" class="w-full">
+        <g class="wire"><path d="M220 190L90 75M220 190L350 75M220 190L90 305M220 190L350 305"/></g>
+        <g stroke="#818cf8" color="#818cf8">
+          <path class="pk fast" d="M90 75L220 190"/><path class="pk fast rev" d="M350 75L220 190"/>
+          <path class="pk fast" d="M220 190L90 305"/><path class="pk fast" d="M220 190L350 305"/>
+        </g>
+        <rect x="170" y="165" width="100" height="50" rx="10" fill="#1e1b4b" stroke="#6366f1" stroke-width="3" class="pulse"/>
+        <text x="220" y="195" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">SWITCH</text>
+        <g fill="#09090b" stroke="#6366f1" stroke-width="3"><rect x="55" y="50" width="70" height="50" rx="8"/><rect x="315" y="50" width="70" height="50" rx="8"/><rect x="55" y="280" width="70" height="50" rx="8"/><rect x="315" y="280" width="70" height="50" rx="8"/></g>
+        <g fill="#a1a1aa" font-size="14" text-anchor="middle"><text x="90" y="80">PC 1</text><text x="350" y="80">PC 2</text><text x="90" y="310">PC 3</text><text x="350" y="310">Printer</text></g>
+        <text x="220" y="362" text-anchor="middle" fill="#818cf8" font-size="14" font-weight="600">Star topology • up to 1 km</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 6 COMPARISON -->
+<section class="slide">
+  <div class="w-full">
+    <h2 class="text-white text-5xl font-bold mb-8">PAN vs LAN</h2>
+    <div class="grid grid-cols-2 gap-12 items-center">
+      <div class="card overflow-hidden text-xl">
+        <table class="w-full">
+          <thead><tr class="text-left border-b border-zinc-800">
+            <th class="p-5"></th><th class="p-5" style="color:var(--pan)">PAN</th><th class="p-5" style="color:#818cf8">LAN</th></tr></thead>
+          <tbody class="text-zinc-400">
+            <tr class="border-b border-zinc-800"><td class="p-5 text-white font-semibold">Range</td><td class="p-5">Up to 10 m</td><td class="p-5">Up to 1 km</td></tr>
+            <tr class="border-b border-zinc-800"><td class="p-5 text-white font-semibold">Ownership</td><td class="p-5">Single person</td><td class="p-5">Private</td></tr>
+            <tr><td class="p-5 text-white font-semibold">Media</td><td class="p-5">USB, Bluetooth, Infrared</td><td class="p-5">Ethernet, UTP, coaxial, fibre, WLAN</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card p-8">
+        <p class="text-zinc-400 text-lg mb-6 font-semibold tracking-wide">SPEED</p>
+        <div class="flex justify-between mb-2 text-xl"><span style="color:var(--pan)" class="font-semibold">PAN</span><span class="text-white">3 Mbps</span></div>
+        <div class="bg-zinc-950 rounded-lg mb-8"><div class="stripe s-pan" style="width:16%"></div></div>
+        <div class="flex justify-between mb-2 text-xl"><span style="color:#818cf8" class="font-semibold">LAN</span><span class="text-white">1 Gbps (1000 Mbps)</span></div>
+        <div class="bg-zinc-950 rounded-lg"><div class="stripe s-lan" style="width:100%"></div></div>
+        <p class="text-zinc-500 text-sm mt-6">Bars use a logarithmic scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 QUIZ -->
+<section class="slide">
+  <div class="w-full max-w-4xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-white text-4xl font-bold">Quick Quiz</h2>
+      <span id="qc" class="text-zinc-400 text-xl"></span>
+    </div>
+    <p id="qt" class="text-white text-3xl font-semibold mb-6"></p>
+    <div id="qo" class="grid grid-cols-2 gap-4 mb-6"></div>
+    <button id="qb" class="nav" style="background:#fff;color:#09090b;min-width:14rem;height:4rem"></button>
+  </div>
+</section>
+
+<!-- 8 THANK YOU -->
+<section class="slide" style="justify-content:center;text-align:center">
+  <div class="dots-bg soft"></div>
+  <div style="position:relative;z-index:1">
+    <h1 class="text-white font-black tracking-tight" style="font-size:8rem;line-height:1">Thank You</h1>
+    <p class="mt-8 text-4xl font-semibold"><span style="color:var(--pan)">Any</span> <span style="color:#818cf8">Questions?</span></p>
+    <p class="text-zinc-400 mt-12 text-2xl font-medium">Presented by Mohammad Deeshan Pinjar</p>
+  </div>
+</section>
+
+<!-- NAV -->
+<div class="fixed bottom-0 inset-x-0 h-28 px-8 flex items-center justify-between z-50" style="background:linear-gradient(transparent,#09090b 40%)">
+  <button id="prev" class="nav"><i data-lucide="chevron-left"></i>Prev</button>
+  <div id="dots" class="flex gap-3"></div>
+  <button id="next" class="nav" style="background:#fff;color:#09090b"><span>Next</span><i data-lucide="chevron-right"></i></button>
+</div>
+
+<script>
+  lucide.createIcons();
+  const slides=[...document.querySelectorAll('.slide')], dots=document.getElementById('dots');
+  const prev=document.getElementById('prev'), next=document.getElementById('next');
+  let cur=0;
+  slides.forEach(()=>{const d=document.createElement('span');d.className='w-3 h-3 rounded-full';dots.appendChild(d)});
+  function go(n){
+    cur=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+    [...dots.children].forEach((d,i)=>d.style.background=i===cur?'#fff':'#3f3f46');
+    prev.disabled=cur===0; next.disabled=cur===slides.length-1;
+  }
+  prev.onclick=()=>go(cur-1); next.onclick=()=>go(cur+1);
+  addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+  go(0);
+
+  // Quiz
+  const Q=[
+    {q:"What is the proximity range of a PAN?",o:["Up to 1 metre","Up to 10 metres","Up to 100 metres","Up to 1 km"],a:1},
+    {q:"What is the speed range of a LAN?",o:["1 Kbps to 1 Mbps","10 Mbps to 1 Gbps","1 Gbps to 10 Gbps","3 Mbps only"],a:1},
+    {q:"What defines a Peer-to-Peer network?",o:["One powerful central server","All nodes are equal, each both client and server","Only works for very large networks","Has dedicated servers"],a:1},
+    {q:"What does WLAN refer to?",o:["Wired Ethernet in a WAN","A Bluetooth PAN","Wireless media used in a LAN","A global network"],a:2}
+  ];
+  let qi=0,sel=null,rev=false;
+  const qt=document.getElementById('qt'),qo=document.getElementById('qo'),qb=document.getElementById('qb'),qc=document.getElementById('qc');
+  function render(){
+    const q=Q[qi];sel=null;rev=false;
+    qc.textContent=`Question ${qi+1} / ${Q.length}`;qt.textContent=q.q;qo.innerHTML='';
+    q.o.forEach((t,i)=>{
+      const b=document.createElement('button');b.className='opt';
+      b.innerHTML=`<span>${'ABCD'[i]}</span>${t}`;
+      b.onclick=()=>{if(rev)return;sel=i;[...qo.children].forEach((c,j)=>c.classList.toggle('sel',j===i))};
+      qo.appendChild(b);
+    });
+    qb.textContent='Reveal Answer';
+  }
+  qb.onclick=()=>{
+    if(!rev){
+      rev=true;const a=Q[qi].a;
+      [...qo.children].forEach((c,j)=>{c.classList.remove('sel');if(j===a)c.classList.add('ok');else if(j===sel)c.classList.add('bad')});
+      qb.textContent=qi<Q.length-1?'Next Question →':'Restart Quiz';
+    }else{qi=(qi+1)%Q.length;render()}
+  };
+  render();
+</script>
+</body>
+</html>
